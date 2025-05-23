@@ -120,9 +120,135 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.ProfessorScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  email: 'email',
+  descricao: 'descricao',
+  foto: 'foto'
+};
+
+exports.Prisma.AlunaScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  linkedin: 'linkedin',
+  foto: 'foto',
+  relato: 'relato'
+};
+
+exports.Prisma.EventoScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  professorId: 'professorId'
+};
+
+exports.Prisma.FotoScalarFieldEnum = {
+  id: 'id',
+  foto: 'foto',
+  idEvento: 'idEvento'
+};
+
+exports.Prisma.ImprensaScalarFieldEnum = {
+  id: 'id',
+  nome_materia: 'nome_materia',
+  link: 'link',
+  midia: 'midia',
+  foto: 'foto'
+};
+
+exports.Prisma.EscolaScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  status: 'status'
+};
+
+exports.Prisma.PatrocinadorScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  foto: 'foto',
+  link: 'link'
+};
+
+exports.Prisma.ProjetoScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  localizacao: 'localizacao'
+};
+
+exports.Prisma.ImpactoProjetoScalarFieldEnum = {
+  id: 'id',
+  descricao: 'descricao',
+  idProfessor: 'idProfessor',
+  idAluna: 'idAluna'
+};
+
+exports.Prisma.HistoriaScalarFieldEnum = {
+  id: 'id',
+  data: 'data',
+  descricao: 'descricao',
+  idProfessor: 'idProfessor'
+};
+
+exports.Prisma.PublicacaoScalarFieldEnum = {
+  id: 'id',
+  titulo: 'titulo',
+  link: 'link',
+  autor: 'autor',
+  ano: 'ano',
+  idioma: 'idioma'
+};
+
+exports.Prisma.ProfessorHasPublicacaoScalarFieldEnum = {
+  idPublicacao: 'idPublicacao',
+  idProfessor: 'idProfessor'
+};
+
+exports.Prisma.AlunaHasPublicacaoScalarFieldEnum = {
+  idPublicacao: 'idPublicacao',
+  idAluna: 'idAluna'
+};
+
+exports.Prisma.AreaAtuacaoScalarFieldEnum = {
+  id: 'id',
+  nome: 'nome',
+  descricao: 'descricao',
+  idProfessor: 'idProfessor'
+};
+
+exports.Prisma.AlunaHasAreaAtuacaoScalarFieldEnum = {
+  idAluna: 'idAluna',
+  idAreaAtuacao: 'idAreaAtuacao'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 
 exports.Prisma.ModelName = {
-
+  Professor: 'Professor',
+  Aluna: 'Aluna',
+  Evento: 'Evento',
+  Foto: 'Foto',
+  Imprensa: 'Imprensa',
+  Escola: 'Escola',
+  Patrocinador: 'Patrocinador',
+  Projeto: 'Projeto',
+  ImpactoProjeto: 'ImpactoProjeto',
+  Historia: 'Historia',
+  Publicacao: 'Publicacao',
+  ProfessorHasPublicacao: 'ProfessorHasPublicacao',
+  AlunaHasPublicacao: 'AlunaHasPublicacao',
+  AreaAtuacao: 'AreaAtuacao',
+  AlunaHasAreaAtuacao: 'AlunaHasAreaAtuacao'
 };
 
 /**
