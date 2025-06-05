@@ -1,0 +1,152 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Professor {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(45)
+  email String @db.VarChar()
+  descricao String @db.VarChar(45)
+  foto String @db.VarChar(45)
+  evento Evento[]
+  areasAtuacao AreaAtuacao[]
+  historia Historia?
+  impactoProjeto ImpactoProjeto?
+  publicacoes ProfessorHasPublicacao[]
+  
+
+}
+
+model Aluna {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(45)
+  linkedin String @db.VarChar(100)
+  foto Bytes @db.ByteA
+  relato String @db.VarChar(150)
+  areaAtuacao AlunaHasAreaAtuacao[]
+  impactoProjeto ImpactoProjeto?
+  publicacoes AlunaHasPublicacao[]
+}
+
+model Evento {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(45)
+  descricao String @db.VarChar(100)
+  professorId Int
+  professor Professor @relation(fields: [professorId], references: [id])
+  fotos Foto[]
+}
+
+model Foto {
+  id  Int @id @default(autoincrement())
+  foto Bytes @db.ByteA
+  idEvento Int
+  evento Evento @relation(fields: [idEvento], references: [id])
+}
+
+model Imprensa {
+  id Int @id @default(autoincrement())
+  nome_materia String @db.VarChar(100)
+  link String @db.VarChar(150)
+  midia String @db.VarChar(45)
+  foto Bytes @db.ByteA
+}
+
+model Escola {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(45)
+  status Boolean @db.Boolean
+}
+
+model Patrocinador {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(45)
+  descricao String @db.VarChar(150)
+  foto Bytes @db.ByteA
+  link String @db.VarChar(150)
+}
+
+model Projeto {
+  id Int @id @default(autoincrement())
+  email String @db.VarChar(45)
+  localizacao String @db.VarChar(150)
+}
+
+model ImpactoProjeto{
+  id Int @id @default(autoincrement())
+  descricao String @db.VarChar(100)
+  idProfessor Int @unique
+  professor Professor @relation(fields: [idProfessor], references: [id])
+  idAluna Int @unique
+  aluna Aluna @relation(fields: [idAluna], references: [id])
+}
+
+model Historia {
+  id Int @id @default(autoincrement())
+  data DateTime @db.Date
+  descricao String @db.VarChar(100)
+  idProfessor Int @unique
+  professor Professor @relation(fields: [idProfessor], references: [id])
+}
+
+model Publicacao {
+  id Int @id @default(autoincrement())
+  titulo String @db.VarChar(150)
+  link String @db.VarChar(300)
+  autor String @db.VarChar(150)
+  ano DateTime @db.Date
+  idioma String @db.VarChar(45)
+  professor ProfessorHasPublicacao[]
+  aluna AlunaHasPublicacao[]
+
+}
+
+model ProfessorHasPublicacao {
+  idPublicacao Int
+  publicacao Publicacao @relation(fields: [idPublicacao], references: [id])
+  idProfessor Int
+  professor Professor @relation(fields: [idProfessor], references: [id])
+
+  @@id([idProfessor, idPublicacao])
+}
+
+model AlunaHasPublicacao {
+  idPublicacao Int
+  publicacao Publicacao @relation(fields: [idPublicacao], references: [id])
+  idAluna Int
+  aluna Aluna @relation(fields: [idAluna], references: [id])
+
+  @@id([idAluna, idPublicacao])
+}
+
+model AreaAtuacao {
+  id Int @id @default(autoincrement())
+  nome String @db.VarChar(45)
+  descricao String @db.VarChar(100)
+  idProfessor Int
+  professor Professor @relation(fields: [idProfessor], references: [id])
+  alunas AlunaHasAreaAtuacao[]
+}
+
+model AlunaHasAreaAtuacao {
+  idAluna Int
+  aluna Aluna @relation(fields: [idAluna], references: [id])
+  idAreaAtuacao Int
+  areaAtuacao AreaAtuacao @relation(fields: [idAreaAtuacao], references: [id])
+
+  @@id([idAluna, idAreaAtuacao])
+
+}
+
