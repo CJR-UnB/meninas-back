@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePatrocinadorDto } from './dto/create-patrocinador.dto';
 import { UpdatePatrocinadorDto } from './dto/update-patrocinador.dto';
+import { PatrocinadorRepository } from './patrocinador.repository';
 
 @Injectable()
 export class PatrocinadorService {
-  create(createPatrocinadorDto: CreatePatrocinadorDto) {
-    return 'This action adds a new patrocinador';
+  constructor(private readonly repository: PatrocinadorRepository) {}
+
+  async create(createPatrocinadorDto: CreatePatrocinadorDto) {
+    if(!createPatrocinadorDto) throw new BadRequestException();
+    return this.repository.create(createPatrocinadorDto);
   }
 
-  findAll() {
-    return `This action returns all patrocinador`;
+  async findAll() {
+    const patrocinador = await this.repository.findAll();
+    if(!patrocinador) throw new NotFoundException;
+
+    return patrocinador;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} patrocinador`;
+  async findOne(id: number) {
+    const patrocinador = await this.repository.findOne(id);
+    if(!patrocinador) throw new NotFoundException();
+
+    return patrocinador;
   }
 
-  update(id: number, updatePatrocinadorDto: UpdatePatrocinadorDto) {
-    return `This action updates a #${id} patrocinador`;
+  async update(id: number, updatePatrocinadorDto: UpdatePatrocinadorDto) {
+    if(!updatePatrocinadorDto) throw new BadRequestException();
+    const patrocinador = await this.repository.findOne(id)
+    if(!patrocinador) throw new NotFoundException();
+  
+    return this.repository.update(id, updatePatrocinadorDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} patrocinador`;
+  async remove(id: number) {
+
+    const patrocinador = await this.repository.findOne(id);
+    if(!patrocinador) throw new NotFoundException()
+    
+    return patrocinador;
   }
 }
