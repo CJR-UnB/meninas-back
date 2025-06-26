@@ -149,4 +149,3 @@ model AlunaHasAreaAtuacao {
   @@id([idAluna, idAreaAtuacao])
 
 }
-
